@@ -1,80 +1,81 @@
 class StudentRecord:
     def __init__(self, student_id, first_name, last_name, age, gender, phone, email, grades=None):
-        self.__student_id = str(student_id)
-        self.__first_name = first_name
-        self.__last_name = last_name
-        self.__age = int(age)
-        self.__gender = gender
-        self.__phone = phone
-        self.__email = email
-
-        if grades is None:
-            self.__grades = []
-        else:
-            self.__grades = grades
+        self.student_id = str(student_id)
+        self.first_name = str(first_name).strip()
+        self.last_name = str(last_name).strip()
+        self.age = int(age)
+        self.gender = str(gender).strip().upper()
+        self.phone = str(phone).strip()
+        self.email = str(email).strip().lower()
+        self.grades = [] if grades is None else [list(row) for row in grades]
 
     def getStudentId(self):
-        return self.__student_id
+        return self.student_id
 
     def setStudentId(self, student_id):
-        self.__student_id = str(student_id)
+        self.student_id = str(student_id)
 
     def getFirstName(self):
-        return self.__first_name
+        return self.first_name
 
     def setFirstName(self, first_name):
-        self.__first_name = first_name
+        self.first_name = str(first_name).strip()
 
     def getLastName(self):
-        return self.__last_name
+        return self.last_name
 
     def setLastName(self, last_name):
-        self.__last_name = last_name
+        self.last_name = str(last_name).strip()
 
     def getAge(self):
-        return self.__age
+        return self.age
 
     def setAge(self, age):
-        self.__age = int(age)
+        self.age = int(age)
 
     def getGender(self):
-        return self.__gender
+        return self.gender
 
     def setGender(self, gender):
-        self.__gender = gender
+        self.gender = str(gender).strip().upper()
 
     def getPhone(self):
-        return self.__phone
+        return self.phone
 
     def setPhone(self, phone):
-        self.__phone = phone
+        self.phone = str(phone).strip()
 
     def getEmail(self):
-        return self.__email
+        return self.email
 
     def setEmail(self, email):
-        self.__email = email
+        self.email = str(email).strip().lower()
 
     def getGrades(self):
-        return self.__grades
+        return [list(row) for row in self.grades]
 
     def setGrades(self, grades):
-        self.__grades = grades
+        self.grades = [] if grades is None else [list(row) for row in grades]
 
-    def toDictionary(self):
+    def getFullName(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def to_dictionary(self):
         return {
-            "student_id": self.__student_id,
-            "first_name": self.__first_name,
-            "last_name": self.__last_name,
-            "age": self.__age,
-            "gender": self.__gender,
-            "phone": self.__phone,
-            "email": self.__email,
-            "grades": self.__grades
+            "student_id": self.student_id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "age": self.age,
+            "gender": self.gender,
+            "phone": self.phone,
+            "email": self.email,
+            "grades": [list(row) for row in self.grades]
         }
 
-    @staticmethod
-    def fromDictionary(data):
+    def toDictionary(self):
+        return self.to_dictionary()
+
+    def from_dictionary(data):
         return StudentRecord(
             data["student_id"],
             data["first_name"],
@@ -86,8 +87,13 @@ class StudentRecord:
             data.get("grades", [])
         )
 
+    def fromDictionary(data):
+        return StudentRecord.from_dictionary(data)
+
     def __str__(self):
-        return (f"Student ID: {self.__student_id}, "
-                f"Name: {self.__first_name} {self.__last_name}, "
-                f"Age: {self.__age}, Gender: {self.__gender}, "
-                f"Phone: {self.__phone}, Email: {self.__email}")
+        return (
+            f"Student ID: {self.student_id}, "
+            f"Name: {self.first_name} {self.last_name}, "
+            f"Age: {self.age}, Gender: {self.gender}, "
+            f"Phone: {self.phone}, Email: {self.email}"
+        )
